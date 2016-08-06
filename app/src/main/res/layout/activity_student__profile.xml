@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border_parentlayout"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+    tools:context="com.iit.ritik.studentinformation.Student_Profile">
+
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/name_title"
+        android:text="@string/name_title" />
+
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/st_name"
+        android:background="@drawable/border"
+        android:padding="8dp"/>
+
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/adm_title"
+        android:text="@string/adm_title"/>
+
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/st_adm"
+        android:background="@drawable/border"
+        android:padding="8dp"/>
+
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/email_title"
+        android:text="@string/email_title"/>
+
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/st_email"
+        android:background="@drawable/border"
+        android:padding="8dp"/>
+</LinearLayout>

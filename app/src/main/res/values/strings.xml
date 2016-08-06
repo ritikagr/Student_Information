@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Student Information</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_teble">+ ADD</string>
+    <string name="table_name">Enter Branch Name</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="student_name">Enter Student Name</string>
+    <string name="emailId">Enter Email Id</string>
+    <string name="adm_no">Enter Admission No.</string>
+    <string name="branch_info">Branch Info</string>
+    <string name="student_profile">Student Profile</string>
+    <string name="adm_title">Admission Number</string>
+    <string name="name_title">Student Name</string>
+    <string name="email_title">Email Id</string>
+</resources>

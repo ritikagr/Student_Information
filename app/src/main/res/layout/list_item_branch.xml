@@ -20,16 +20,17 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/row_name"
+        android:id="@+id/row_branch_name"
         android:textSize="20sp"
         android:layout_margin="8dp"/>
 
     <Button
         android:layout_width="30dp"
         android:layout_height="match_parent"
-        android:id="@+id/delete_row"
+        android:id="@+id/delete_branch_row"
         android:layout_margin="4dp"
-        android:background="@drawable/ic_delete_white_18dp"/>
+        android:background="@drawable/ic_delete_white_18dp"
+        android:onClick="deleteBranch"/>
 
 </LinearLayout>
 <!--</HorizontalScrollView>-->

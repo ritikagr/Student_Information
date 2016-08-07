@@ -1,20 +1,21 @@
 package com.iit.ritik.studentinformation;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,6 +39,10 @@ public class Branch_Info extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch__info);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_branch);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         openDatabase();
         Intent intent = getIntent();
@@ -54,7 +59,7 @@ public class Branch_Info extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.student_list);
         studentList = Collections.synchronizedList(new ArrayList<String>());
         updateStudentList();
-        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.list_item,R.id.row_name,studentList);
+        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.list_item_student,R.id.row_branch_name,studentList);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,6 +142,7 @@ public class Branch_Info extends AppCompatActivity {
         c.moveToFirst();
         while(c.isAfterLast()!=true) {
             String itemId = c.getString(c.getColumnIndexOrThrow(DatabaseContract.DataEntry.COLUMN_ID));
+            if(!studentList.contains(itemId))
             studentList.add(itemId);
             c.moveToNext();
         }
@@ -146,6 +152,19 @@ public class Branch_Info extends AppCompatActivity {
         student_name1.setVisibility(View.GONE);
         ok1.setVisibility(View.GONE);
         cancel1.setVisibility(View.GONE);
+    }
+
+    public void deleteStudent(View view)
+    {
+        openDatabase();
+        TextView textView = (TextView) getParent().findViewById(R.id.row_student_name);
+        String column_adm = textView.getText().toString();
+        String sql = "DELETE FROM '"+table_name1+"' WHERE adm_no='"+column_adm+"'";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.executeUpdateDelete();
+        Toast.makeText(this,"Student with Admission Number "+ column_adm + " Deleted Successfully",Toast.LENGTH_SHORT).show();
+        updateStudentList();
+        arrayAdapter.notifyDataSetChanged();
     }
 
 }

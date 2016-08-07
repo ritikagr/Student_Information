@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         openDatabase();
 
         updateBranchList();
-        branchAdapter = new ArrayAdapter(MainActivity.this,R.layout.list_item,R.id.row_name,branchList);
+        branchAdapter = new ArrayAdapter(MainActivity.this,R.layout.list_item_branch,R.id.row_branch_name,branchList);
 
         listView.setAdapter(branchAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         db.close();
     }
 
@@ -176,5 +178,18 @@ public class MainActivity extends AppCompatActivity {
         ok.setVisibility(View.GONE);
         cancel.setVisibility(View.GONE);
         add.setVisibility(View.VISIBLE);
+    }
+    private void deleteBranch(View view)
+    {
+        openDatabase();
+        TextView textView = (TextView) getWindow().getDecorView().findViewById(R.id.row_name);
+        String table_name = textView.getText().toString();
+        String sql = "DROP TABLE '"+table_name+"'";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.executeUpdateDelete();
+        Toast.makeText(this,table_name + "Branch Deleted Successfully",Toast.LENGTH_SHORT).show();
+        updateBranchList();
+        branchAdapter.notifyDataSetChanged();
+        db.close();
     }
 }

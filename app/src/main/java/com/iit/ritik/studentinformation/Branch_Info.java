@@ -117,7 +117,7 @@ public class Branch_Info extends AppCompatActivity {
             db.close();
         }
         else{
-            Toast.makeText(getApplicationContext(),"Please Enter Valid Branch Name",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Please Enter Valid Student Information",Toast.LENGTH_SHORT).show();
         }
     }
 

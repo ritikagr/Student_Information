@@ -142,8 +142,11 @@ public class Branch_Info extends AppCompatActivity {
     public void cancel1(View view)
     {
         student_name1.setVisibility(View.GONE);
+        adm_no.setVisibility(View.GONE);
+        emailId.setVisibility(View.GONE);
         ok1.setVisibility(View.GONE);
         cancel1.setVisibility(View.GONE);
+        add1.setVisibility(View.VISIBLE);
     }
 
     public void deleteStudent(View view)

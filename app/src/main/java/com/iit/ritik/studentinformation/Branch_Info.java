@@ -59,7 +59,7 @@ public class Branch_Info extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.student_list);
         studentList = Collections.synchronizedList(new ArrayList<String>());
         updateStudentList();
-        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.list_item_student,R.id.row_branch_name,studentList);
+        arrayAdapter = new ArrayAdapter<String>(Branch_Info.this,R.layout.list_item_student,R.id.row_student_adm,studentList);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,6 +72,7 @@ public class Branch_Info extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+        db.close();
     }
 
     public void openDatabase()
@@ -91,6 +92,7 @@ public class Branch_Info extends AppCompatActivity {
 
     public void ok1(View view)
     {
+        openDatabase();
         String studentName1 = student_name1.getText().toString();
         String adm = adm_no.getText().toString();
         String email = emailId.getText().toString();
@@ -106,25 +108,13 @@ public class Branch_Info extends AppCompatActivity {
             String sql = "INSERT INTO '"+table_name1+"' (adm_no,name,email_id) VALUES ('"+adm+"','"+studentName1+"','"+email+"')";
             SQLiteStatement stmt = db.compileStatement(sql);
             stmt.executeInsert();
-            /*ContentValues data = new ContentValues();
-            data.put(DatabaseContract.DataEntry.COLUMN_ID,"'"+adm+"'");
-            data.put(DatabaseContract.DataEntry.COLUMN_NAME,"'"+studentName1+"'");
-            data.put(DatabaseContract.DataEntry.COLUMN_EMAIL,"'"+email+"'");
-            long id = db.insert("'"+table_name1+"'",null,data);
-            if(id==1)
-            {
-                Toast.makeText(this,"Information inserted successfully",Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Toast.makeText(this,"Error",Toast.LENGTH_SHORT).show();
-            }
-*/
+
             updateStudentList();
             arrayAdapter.notifyDataSetChanged();
             student_name1.setText("");
             adm_no.setText("");
             emailId.setText("");
+            db.close();
         }
         else{
             Toast.makeText(getApplicationContext(),"Please Enter Valid Branch Name",Toast.LENGTH_SHORT).show();
@@ -135,17 +125,19 @@ public class Branch_Info extends AppCompatActivity {
     {
         /*String[] projection = {DatabaseContract.DataEntry.COLUMN_ID};
         Cursor c = db.query("'"+table_name1+"'",projection,null,null,null,null,null);*/
-
+        openDatabase();
         String sql = "SELECT adm_no FROM '"+table_name1+"'";
         Cursor c = db.rawQuery(sql,null);
 
+        studentList.clear();
         c.moveToFirst();
         while(c.isAfterLast()!=true) {
             String itemId = c.getString(c.getColumnIndexOrThrow(DatabaseContract.DataEntry.COLUMN_ID));
-            if(!studentList.contains(itemId))
             studentList.add(itemId);
             c.moveToNext();
         }
+        c.close();
+        db.close();
     }
     public void cancel1(View view)
     {
@@ -157,7 +149,7 @@ public class Branch_Info extends AppCompatActivity {
     public void deleteStudent(View view)
     {
         openDatabase();
-        TextView textView = (TextView) getParent().findViewById(R.id.row_student_name);
+        TextView textView = (TextView) getWindow().getDecorView().findViewById(R.id.row_student_adm);
         String column_adm = textView.getText().toString();
         String sql = "DELETE FROM '"+table_name1+"' WHERE adm_no='"+column_adm+"'";
         SQLiteStatement stmt = db.compileStatement(sql);
@@ -165,6 +157,7 @@ public class Branch_Info extends AppCompatActivity {
         Toast.makeText(this,"Student with Admission Number "+ column_adm + " Deleted Successfully",Toast.LENGTH_SHORT).show();
         updateStudentList();
         arrayAdapter.notifyDataSetChanged();
+        db.close();
     }
 
 }

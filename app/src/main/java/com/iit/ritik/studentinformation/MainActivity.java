@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 branchList.add(s);
                 c.moveToNext();
             }
+            c.close();
         }catch(ArrayIndexOutOfBoundsException e)
         {
         }
@@ -179,15 +180,15 @@ public class MainActivity extends AppCompatActivity {
         cancel.setVisibility(View.GONE);
         add.setVisibility(View.VISIBLE);
     }
-    private void deleteBranch(View view)
+    public void deleteBranch(View view)
     {
         openDatabase();
-        TextView textView = (TextView) getWindow().getDecorView().findViewById(R.id.row_name);
+        TextView textView = (TextView) getWindow().getDecorView().findViewById(R.id.row_branch_name);
         String table_name = textView.getText().toString();
         String sql = "DROP TABLE '"+table_name+"'";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeUpdateDelete();
-        Toast.makeText(this,table_name + "Branch Deleted Successfully",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Branch "+table_name + " Deleted Successfully",Toast.LENGTH_SHORT).show();
         updateBranchList();
         branchAdapter.notifyDataSetChanged();
         db.close();

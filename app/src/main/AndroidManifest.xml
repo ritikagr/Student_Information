@@ -27,9 +27,6 @@
         <activity
             android:name=".Student_Profile"
             android:label="@string/student_profile">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Branch_Info" />
         </activity>
     </application>
 
